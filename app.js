@@ -9,7 +9,7 @@ const conncetDB = require("./server/config/db");
 
 const app = express();
 
-const port = 5000 || process.env.PORT;
+const port = 4000 || process.env.PORT;
 conncetDB();
 
 app.use(express.urlencoded({ extended: true }));

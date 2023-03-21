@@ -1,5 +1,6 @@
 const Customer = require("../models/Customer");
 const mongoose = require("mongoose");
+const { customerValidator } = require("../validators");
 
 exports.homepage = async (req, res) => {
   const messages = await req.flash("info");
@@ -38,7 +39,12 @@ exports.addCustomer = async (req, res) => {
 };
 
 exports.postCustomer = async (req, res) => {
-  console.log(req.body);
+  const { error, value } = customerValidator.validate(req.body);
+
+  if (error) {
+    const errors = req.flash("error", error.details[0].message);
+    res.redirect("/add", { errors });
+  }
   const newCustomer = new Customer({
     firstName: req.body.firstName,
     lastName: req.body.lastName,

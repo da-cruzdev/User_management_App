@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<form action="/add" method="POST">
+<form action="/add" method="POST" novalidate>
   <div class="row form-group mb-4">
     <div class="col">
       <label for="firstName">First Name</label>
@@ -34,13 +34,11 @@
         class="form-control"
         id="firstName"
         name="firstName"
-        value=""
+        value="<%= typeof firstName !== 'undefined' ? firstName : '' %>"
         placeholder="First Name"
       />
       <% if (errors && errors.firstName) { %>
-      <div class="alert alert-danger mt-1" role="alert">
-        <%= errors.firstName.message %>
-      </div>
+      <div class="invalid-feedback d-block"><%= errors.firstName %></div>
       <% } %>
     </div>
 
@@ -51,13 +49,11 @@
         class="form-control"
         id="lastName"
         name="lastName"
-        value=""
+        value="<%= typeof lastName!== 'undefined' ? lastName: '' %>"
         placeholder="Last Name"
       />
       <% if (errors && errors.lastName) { %>
-      <div class="alert alert-danger mt-1" role="alert">
-        <%= errors.lastName.message %>
-      </div>
+      <div class="invalid-feedback d-block"><%= errors.lastName %></div>
       <% } %>
     </div>
   </div>
@@ -70,13 +66,11 @@
         class="form-control"
         id="tel"
         name="tel"
-        value=""
+        value="<%= typeof tel !== 'undefined' ? tel : '' %>"
         placeholder="Telephone"
       />
       <% if (errors && errors.tel) { %>
-      <div class="alert alert-danger mt-1" role="alert">
-        <%= errors.tel.message %>
-      </div>
+      <div class="invalid-feedback d-block"><%= errors.tel %></div>
       <% } %>
     </div>
 
@@ -87,13 +81,11 @@
         class="form-control"
         id="email"
         name="email"
-        value=""
+        value="<%= typeof email !== 'undefined' ? email : '' %>"
         placeholder="Email"
       />
       <% if (errors && errors.email) { %>
-      <div class="alert alert-danger mt-1" role="alert">
-        <%= errors.email.message %>
-      </div>
+      <div class="invalid-feedback d-block"><%= errors.email %></div>
       <% } %>
     </div>
   </div>
@@ -104,14 +96,15 @@
       class="form-control"
       name="details"
       id="details"
-      cols="30"
-      rows="12"
+      cols="15"
+      rows="6"
       placeholder="Customer Details"
     ></textarea>
     <% if (errors && errors.details) { %>
-    <div class="alert alert-danger mt-1" role="alert">
-      <%= errors.details.message %>
-    </div>
+    <div class="invalid-feedback d-block"><%= errors.details %></div>
     <% } %>
+  </div>
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add Customer</button>
   </div>
 </form>

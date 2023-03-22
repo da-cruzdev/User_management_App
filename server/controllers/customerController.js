@@ -39,26 +39,39 @@ exports.addCustomer = async (req, res) => {
 };
 
 exports.postCustomer = async (req, res) => {
-  const { error, value } = customerValidator.validate(req.body);
-
-  if (error) {
-    const errors = req.flash("error", error.details[0].message);
-    res.redirect("/add", { errors });
-  }
-  const newCustomer = new Customer({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    tel: req.body.tel,
-    email: req.body.email,
-    details: req.body.details,
+  const { error, value } = customerValidator.validate(req.body, {
+    abortEarly: false,
   });
 
-  try {
-    await Customer.create(newCustomer);
-    await req.flash("info", "New customer has been added.");
-    res.redirect("/");
-  } catch (error) {
-    console.log(error);
+  if (error) {
+    //const errors = req.flash("firstname", error.details[0]);
+
+    // const errors = error.details.map(({ path, message }) => ({
+    //   [path]: message,
+    // }));
+    const errors = error.details.reduce((acc, current) => {
+      acc[current.context.key] = current.message;
+      return acc;
+    }, {});
+    console.log(errors);
+
+    res.render("customer/add", { errors });
+  } else {
+    const newCustomer = new Customer({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      tel: req.body.tel,
+      email: req.body.email,
+      details: req.body.details,
+    });
+
+    try {
+      await Customer.create(newCustomer);
+      req.flash("info", "New customer has been added.");
+      res.redirect("/");
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

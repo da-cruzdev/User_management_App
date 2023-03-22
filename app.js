@@ -28,6 +28,10 @@ app.use(
   })
 );
 app.use(flash({ sessionKeyName: "flashMessage" }));
+app.use((req, res, next) => {
+  res.locals.errors = req.flash("error");
+  next();
+});
 
 app.use(expressLayout);
 app.set("layout", "./layouts/main");

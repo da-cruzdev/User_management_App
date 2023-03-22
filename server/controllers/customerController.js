@@ -126,19 +126,38 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  try {
-    const id = req.params.id;
-    await Customer.findByIdAndUpdate(id, {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      tel: req.body.tel,
-      email: req.body.email,
-      details: req.body.details,
-    });
+  const { error, value } = customerValidator.validate(req.body, {
+    abortEarly: false,
+  });
+  req.flash("formData", req.body);
+  const formData = req.flash("formData")[0];
 
-    res.redirect(`/edit/${req.params.id}`);
-  } catch (error) {
-    console.log(error);
+  if (error) {
+    const customer = await Customer.findById(req.params.id);
+    const errors = error.details.reduce((acc, current) => {
+      acc[current.context.key] = current.message;
+      return acc;
+    }, {});
+    res.render("customer/edit", {
+      customer,
+      errors: errors,
+      formData: formData,
+    });
+  } else {
+    try {
+      const id = req.params.id;
+      await Customer.findByIdAndUpdate(id, {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        tel: req.body.tel,
+        email: req.body.email,
+        details: req.body.details,
+      });
+
+      res.redirect(`/edit/${req.params.id}`);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

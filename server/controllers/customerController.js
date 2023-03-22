@@ -30,32 +30,28 @@ exports.homepage = async (req, res) => {
 };
 
 exports.addCustomer = async (req, res) => {
+  const errors = req.flash("errors")[0] || {};
+  const formData = req.flash("formData")[0] || {};
   const locals = {
     title: "Add new Customer - NodeJs",
     description: "Free NodeJS User Management",
   };
 
-  res.render("customer/add", locals);
+  res.render("customer/add", { locals, errors, formData });
 };
 
 exports.postCustomer = async (req, res) => {
   const { error, value } = customerValidator.validate(req.body, {
     abortEarly: false,
   });
-
   if (error) {
-    //const errors = req.flash("firstname", error.details[0]);
-
-    // const errors = error.details.map(({ path, message }) => ({
-    //   [path]: message,
-    // }));
     const errors = error.details.reduce((acc, current) => {
       acc[current.context.key] = current.message;
       return acc;
     }, {});
-    console.log(errors);
-
-    res.render("customer/add", { errors });
+    req.flash("errors", errors);
+    req.flash("formData", req.body);
+    res.redirect("add");
   } else {
     const newCustomer = new Customer({
       firstName: req.body.firstName,
@@ -64,7 +60,6 @@ exports.postCustomer = async (req, res) => {
       email: req.body.email,
       details: req.body.details,
     });
-
     try {
       await Customer.create(newCustomer);
       req.flash("info", "New customer has been added.");
@@ -73,6 +68,35 @@ exports.postCustomer = async (req, res) => {
       console.log(error);
     }
   }
+  // const { error, value } = customerValidator.validate(req.body, {
+  //   abortEarly: false,
+  // });
+  // if (error) {
+  //   const errors = error.details.reduce((acc, current) => {
+  //     acc[current.context.key] = current.message;
+  //     return acc;
+  //   }, {});
+  //   req.flash("errors", errors);
+  //   req.flash("formData", req.body);
+  //   res.redirect("add");
+  // } else {
+  //   const newCustomer = new Customer({
+  //     firstName: req.body.firstName,
+  //     lastName: req.body.lastName,
+  //     tel: req.body.tel,
+  //     email: req.body.email,
+  //     details: req.body.details,
+  //   });
+  //   try {
+  //     await Customer.create(newCustomer);
+  //     req.flash("info", "New customer has been added.");
+  //     req.flash("formData", {});
+  //     req.flash("valid", "The form has been successfully submitted.");
+  //     res.redirect("/");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 };
 
 exports.view = async (req, res) => {

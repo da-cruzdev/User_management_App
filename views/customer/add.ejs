@@ -31,10 +31,10 @@
       <label for="firstName">First Name</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control <%= errors && errors.firstName ? 'is-invalid' : '' %> <%= errors && errors.firstName ? 'is-invalid' : '' %>"
         id="firstName"
         name="firstName"
-        value="<%= typeof firstName !== 'undefined' ? firstName : '' %>"
+        value="<%= typeof formData !== 'undefined' ? formData.firstName : '' %>"
         placeholder="First Name"
       />
       <% if (errors && errors.firstName) { %>
@@ -46,10 +46,10 @@
       <label for="lastName">Last Name</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control <%= errors && errors.lastName? 'is-invalid' : '' %>"
         id="lastName"
         name="lastName"
-        value="<%= typeof lastName!== 'undefined' ? lastName: '' %>"
+        value="<%= typeof formData !== 'undefined' ? formData.lastName: '' %>"
         placeholder="Last Name"
       />
       <% if (errors && errors.lastName) { %>
@@ -63,10 +63,10 @@
       <label for="tel">Telephone</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control <%= errors && errors.tel ? 'is-invalid' : '' %>"
         id="tel"
         name="tel"
-        value="<%= typeof tel !== 'undefined' ? tel : '' %>"
+        value="<%= typeof formData !== 'undefined' ? formData.tel : '' %>"
         placeholder="Telephone"
       />
       <% if (errors && errors.tel) { %>
@@ -78,10 +78,10 @@
       <label for="email">Email</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control <%= errors && errors.email? 'is-invalid' : '' %>"
         id="email"
         name="email"
-        value="<%= typeof email !== 'undefined' ? email : '' %>"
+        value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
         placeholder="Email"
       />
       <% if (errors && errors.email) { %>
@@ -93,7 +93,7 @@
   <div class="form-group mb-4">
     <label for="details">Customer Details</label>
     <textarea
-      class="form-control"
+      class="form-control <%= errors && errors.details ? 'is-invalid' : '' %>"
       name="details"
       id="details"
       cols="15"

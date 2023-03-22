@@ -99,7 +99,9 @@
       cols="15"
       rows="6"
       placeholder="Customer Details"
-    ></textarea>
+    >
+ <%= typeof formData !== 'undefined' ? formData.details : '' %> </textarea
+    >
     <% if (errors && errors.details) { %>
     <div class="invalid-feedback d-block"><%= errors.details %></div>
     <% } %>

@@ -34,30 +34,20 @@
   <div class="row form-group mb-4">
     <div class="col">
       <label for="firstName">First Name</label>
-      <input
-        type="text"
-        class="form-control <%= errors && errors.firstName ? 'is-invalid' : '' %>"
-        id="firstName"
-        name="firstName"
-        value="<%= formData ? formData.firstName : customer.firstName  %>"
-        placeholder="First Name"
-      />
-      <% if (errors && errors.firstName) { %>
+      <input type="text" class="form-control <%= errors && errors.firstName ?
+      'is-invalid' : '' %>" id="firstName" name="firstName" value="<%= typeof
+      formData !=="undefined" ? formData.firstName : customer.firstName %>"
+      placeholder="First Name" /> <% if (errors && errors.firstName) { %>
       <div class="invalid-feedback"><%= errors.firstName %></div>
       <% } %>
     </div>
 
     <div class="col">
       <label for="lastName">Last Name</label>
-      <input
-        type="text"
-        class="form-control <%= errors && errors.lastName ? 'is-invalid' : '' %>"
-        id="lastName"
-        name="lastName"
-        value="<%= formData ? formData.lastName : customer.lastName  %>"
-        placeholder="Last Name"
-      />
-      <% if (errors && errors.lastName) { %>
+      <input type="text" class="form-control <%= errors && errors.lastName ?
+      'is-invalid' : '' %>" id="lastName" name="lastName" value="<%= typeof
+      formData !=="undefined" ? formData.lastName : customer.lastName %>"
+      placeholder="Last Name" /> <% if (errors && errors.lastName) { %>
       <div class="invalid-feedback"><%= errors.lastName %></div>
       <% } %>
     </div>
@@ -66,30 +56,20 @@
   <div class="row form-group mb-4">
     <div class="col">
       <label for="tel">Telephone</label>
-      <input
-        type="text"
-        class="form-control <%= errors && errors.tel ? 'is-invalid' : '' %>"
-        id="tel"
-        name="tel"
-        value="<%= formData ? formData.tel : customer.tel %>"
-        placeholder="Telephone"
-      />
-      <% if (errors && errors.tel) { %>
+      <input type="text" class="form-control <%= errors && errors.tel ?
+      'is-invalid' : '' %>" id="tel" name="tel" value="<%= typeof formData
+      !=="undefined" ? formData.tel : customer.tel %>" placeholder="Telephone"
+      /> <% if (errors && errors.tel) { %>
       <div class="invalid-feedback"><%= errors.tel %></div>
       <% } %>
     </div>
 
     <div class="col">
       <label for="email">Email</label>
-      <input
-        type="text"
-        class="form-control <%= errors && errors.email ? 'is-invalid' : '' %>"
-        id="email"
-        name="email"
-        value="<%= formData ? formData.email : customer.email  %>"
-        placeholder="Email"
-      />
-      <% if (errors && errors.email) { %>
+      <input type="text" class="form-control <%= errors && errors.email ?
+      'is-invalid' : '' %>" id="email" name="email" value="<%= typeof formData
+      !=="undefined" ? formData.email : customer.email %>" placeholder="Email"
+      /> <% if (errors && errors.email) { %>
       <div class="invalid-feedback"><%= errors.email %></div>
       <% } %>
     </div>
@@ -105,7 +85,8 @@
       rows="12"
       placeholder="Customer Details"
     >
-<%= formData ? formData.details : customer.details %></textarea
+<%= typeof
+formData !=="undefined" ? formData.details : customer.details %></textarea
     >
     <% if (errors && errors.details) { %>
     <div class="invalid-feedback"><%= errors.details %></div>
